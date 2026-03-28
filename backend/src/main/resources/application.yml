@@ -4,8 +4,8 @@ spring:
 
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/devquiz
-    username: postgres
-    password: postgres
+    username: devquiz
+    password: devquiz123
 
   redis:
     host: localhost

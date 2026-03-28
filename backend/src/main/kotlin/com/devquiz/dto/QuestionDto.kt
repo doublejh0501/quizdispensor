@@ -9,7 +9,9 @@ data class QuestionResponse(
     val questionText: String,
     val questionType: QuestionType,
     val options: List<String>?,
-    val difficulty: Difficulty
+    val difficulty: Difficulty,
+    val correctAnswer: String,
+    val explanation: String?
 )
 
 data class QuestionWithAnswerResponse(

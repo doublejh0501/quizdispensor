@@ -70,6 +70,8 @@ class QuestionService(
         questionText = questionText,
         questionType = questionType,
         options = options,
-        difficulty = difficulty
+        difficulty = difficulty,
+        correctAnswer = correctAnswer,
+        explanation = explanation
     )
 }

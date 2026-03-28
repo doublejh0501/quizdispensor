@@ -1,89 +1,110 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import Link from 'next/link'
 
-interface Question {
-  id: number
-  category: string
-  questionText: string
-  questionType: string
-  options: string[] | null
-  difficulty: string
-}
+const categories = [
+  {
+    name: '자료구조',
+    slug: 'data-structure',
+    description: '배열, 스택, 큐, 트리, 그래프 등',
+    icon: '📊',
+    color: 'bg-blue-500'
+  },
+  {
+    name: '네트워크',
+    slug: 'network',
+    description: 'HTTP, TCP/IP, REST API 등',
+    icon: '🌐',
+    color: 'bg-green-500'
+  },
+  {
+    name: '데이터베이스',
+    slug: 'database',
+    description: 'SQL, 트랜잭션, 인덱스 등',
+    icon: '🗄️',
+    color: 'bg-purple-500'
+  },
+  {
+    name: '운영체제',
+    slug: 'os',
+    description: '프로세스, 메모리, 동기화 등',
+    icon: '💻',
+    color: 'bg-orange-500'
+  },
+  {
+    name: '디자인패턴',
+    slug: 'design-pattern',
+    description: '싱글톤, 팩토리, 옵저버 등',
+    icon: '🎨',
+    color: 'bg-pink-500'
+  },
+  {
+    name: '알고리즘',
+    slug: 'algorithm',
+    description: '정렬, 탐색, 동적계획법 등',
+    icon: '🧮',
+    color: 'bg-red-500'
+  }
+]
 
 export default function Home() {
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    fetchQuestions()
-  }, [])
-
-  const fetchQuestions = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/questions')
-      setQuestions(response.data)
-      setLoading(false)
-    } catch (err) {
-      setError('Failed to load questions')
-      setLoading(false)
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl">Loading...</p>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-red-500">{error}</p>
-      </div>
-    )
-  }
-
   return (
-    <div className="min-h-screen p-8">
-      <header className="max-w-4xl mx-auto mb-8">
-        <h1 className="text-4xl font-bold mb-2">Dev Quiz</h1>
-        <p className="text-gray-600">개발 용어 퀴즈로 면접 준비하기</p>
-      </header>
+    <div className="py-12 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold mb-4 text-gray-900">
+            개발 용어 퀴즈
+          </h1>
+          <p className="text-xl text-gray-600">
+            면접 준비를 위한 카테고리별 퀴즈로 실력을 점검하세요
+          </p>
+        </div>
 
-      <main className="max-w-4xl mx-auto">
-        <div className="grid gap-4">
-          {questions.length === 0 ? (
-            <p className="text-center text-gray-500">아직 퀴즈가 없습니다.</p>
-          ) : (
-            questions.map((question) => (
-              <div
-                key={question.id}
-                className="border rounded-lg p-6 hover:shadow-lg transition-shadow"
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                    {question.category}
-                  </span>
-                  <span className="text-sm text-gray-500">
-                    {question.difficulty}
-                  </span>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {categories.map((category) => (
+            <Link
+              key={category.slug}
+              href={`/quiz/${category.slug}`}
+              className="block"
+            >
+              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+                <div className={`w-16 h-16 ${category.color} rounded-lg flex items-center justify-center text-3xl mb-4`}>
+                  {category.icon}
                 </div>
-                <h3 className="text-lg font-semibold mb-2">
-                  {question.questionText}
-                </h3>
-                <p className="text-sm text-gray-600">
-                  {question.questionType === 'OX' ? 'OX 퀴즈' : '4지선다'}
+                <h2 className="text-2xl font-bold mb-2 text-gray-900">
+                  {category.name}
+                </h2>
+                <p className="text-gray-600">
+                  {category.description}
                 </p>
               </div>
-            ))
-          )}
+            </Link>
+          ))}
         </div>
-      </main>
+
+        <div className="mt-16 bg-white rounded-xl p-8 shadow-md text-center">
+          <h3 className="text-2xl font-bold mb-4 text-gray-900">
+            학습 팁
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6 text-left">
+            <div>
+              <div className="text-3xl mb-2">✅</div>
+              <h4 className="font-semibold mb-1">OX 퀴즈</h4>
+              <p className="text-sm text-gray-600">기본 개념을 빠르게 확인</p>
+            </div>
+            <div>
+              <div className="text-3xl mb-2">📝</div>
+              <h4 className="font-semibold mb-1">4지선다</h4>
+              <p className="text-sm text-gray-600">심화 내용 이해도 테스트</p>
+            </div>
+            <div>
+              <div className="text-3xl mb-2">💡</div>
+              <h4 className="font-semibold mb-1">해설 제공</h4>
+              <p className="text-sm text-gray-600">틀린 문제는 해설로 학습</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
