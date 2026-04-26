@@ -1,5 +1,8 @@
 # Dev Quiz - 개발 용어 퀴즈 사이트
 
+![Backend CI](https://github.com/doublejh0501/quizdispensor/actions/workflows/backend-ci.yml/badge.svg)
+![Frontend CI](https://github.com/doublejh0501/quizdispensor/actions/workflows/frontend-ci.yml/badge.svg)
+
 면접 준비를 위한 개발 용어 퀴즈 플랫폼
 
 ## 기술 스택
